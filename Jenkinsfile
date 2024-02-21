@@ -29,7 +29,7 @@ pipeline {
                 echo 'creating docker container'
                 script{
                     echo '${BUILD_NUMBER}'
-                    echo ${BUILD_NUMBER}
+                    echo "${BUILD_NUMBER}"
                     def image = docker.build "multibranch_app:${BUILD_NUMBER}"
                     // sh 'docker build -t multibranch_app:${BUILD_NUMBER} .'
                 }

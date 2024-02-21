@@ -33,9 +33,9 @@ pipeline {
         stage("docker build") {
             steps {
                 script {
-                    if (branch 'main') {
+                    if (env.BRANCH_NAME == 'main') {
                         mainImage = docker.build "nodemain:${BUILD_NUMBER}"
-                    } else if (branch == 'dev') {
+                    } else if (env.BRANCH_NAME == 'dev') {
                         devImage = docker.build "nodedev:${BUILD_NUMBER}"
                     }
                 }
@@ -45,9 +45,9 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    if (branch 'main') {
+                    if (env.BRANCH_NAME == 'main') {
                         mainImage.run(['-p', '3000:3000'])
-                    } else if (branch 'dev') {
+                    } else if (env.BRANCH_NAME == 'dev') {
                         devImage.run(['-p', '3001:3000'])
                     }
                 }

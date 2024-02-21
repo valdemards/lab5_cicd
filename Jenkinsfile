@@ -34,9 +34,10 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
-                        mainImage = docker.build "nodemain:${BUILD_NUMBER}"
+                        // mainImage = docker.build "nodemain:${BUILD_NUMBER}"
+                        sh "docker build -t nodemain:${BUILD_NUMBER} ."
                     } else if (env.BRANCH_NAME == 'dev') {
-                        devImage = docker.build "nodedev:${BUILD_NUMBER}"
+                        devImage = docker.build "nodedev:${BUILD_NUMBER} ."
                     }
                 }
             }
@@ -46,9 +47,11 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
-                        mainImage.run(['-p', '3000:3000'])
+                        sh "docker run -d --expose 3000 -p 3000:3000 nodemain:${BUILD_NUMBER}"
+                        sh "docker rmi -f nodemain:${BUILD_NUMBER}"
                     } else if (env.BRANCH_NAME == 'dev') {
-                        devImage.run(['-p', '3001:3000'])
+                        sh "docker run -d --expose 3001 -p 3001:3000 nodedev:${BUILD_NUMBER}"
+                        sh "docker rmi -f nodedev:${BUILD_NUMBER}"
                     }
                 }
             }

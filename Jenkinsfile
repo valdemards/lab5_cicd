@@ -3,6 +3,7 @@ pipeline {
     agent any
 
     tools {
+        docker 'docker'
         nodejs 'nodejs'
     }
 
@@ -27,10 +28,8 @@ pipeline {
             steps {
                 echo 'creating docker container'
                 script {
-                    // sh 'echo "312021" | sudo -S usermod -aG docker jenkins'
+                    docker.build('multibranch_app:${BUILD_NUMBER}')
                     // sh 'docker build -t multibranch_app:${BUILD_NUMBER} .'
-                    sh "groups"
-                    sh 'docker build -t multibranch_app:${BUILD_NUMBER} .'
                 }
             }
         }

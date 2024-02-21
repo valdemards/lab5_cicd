@@ -31,37 +31,25 @@ pipeline {
         }
 
         stage("docker build") {
-            when {
-                branch 'main'
-            }
             steps {
-                script{
-                    mainImage = docker.build "nodemain:${BUILD_NUMBER}"
-                }
-            }
-            when {
-                branch 'dev'
-            }
-            steps {
-                script{
-                    devImage = docker.build "nodedev:${BUILD_NUMBER}"
+                script {
+                    if (branch 'main') {
+                        mainImage = docker.build "nodemain:${BUILD_NUMBER}"
+                    } else if (branch == 'dev') {
+                        devImage = docker.build "nodedev:${BUILD_NUMBER}"
+                    }
                 }
             }
         }
         
         stage("deploy") {
             steps {
-                when {
-                branch 'main'
-            }
-                script{
-                    mainImage.run(['-p 3000:3000'])
-                }
-            when {
-                branch 'dev'
-            }
-                script{
-                    devImage.run(['-p 3001:3000'])
+                script {
+                    if (branch 'main') {
+                        mainImage.run(['-p', '3000:3000'])
+                    } else if (branch 'dev') {
+                        devImage.run(['-p', '3001:3000'])
+                    }
                 }
             }
         }

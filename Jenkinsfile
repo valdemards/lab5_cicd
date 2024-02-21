@@ -38,7 +38,7 @@ pipeline {
                 echo 'deploying the application'
                 script{
                     // docker.run "multibranch_app:${BUILD_NUMBER}"
-                    docker.image.run(-p 3001:3000)
+                    docker.image.run('-p 3001:3000')
                 }
             }
         }

@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo 'creating docker container'
                 script {
-                    sh 'sudo usermod -aG docker ${USER}'
+                    sh 'echo "312021" | sudo -S usermod -aG docker jenkins'
                     sh 'docker build -t multibranch_app${BUILD_NUMBER} .'
                 }
             }

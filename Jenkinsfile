@@ -7,7 +7,7 @@ pipeline {
         stage("install") {
 
             steps {
-                echo 'installing the application'
+                sh 'npm install'
             }
         }
         stage("build") {
@@ -19,7 +19,7 @@ pipeline {
         stage("test") {
 
             steps {
-                echo 'testing the application'
+                sh 'npm test'
             }
         }
         stage("docker build") {
@@ -34,8 +34,5 @@ pipeline {
                 echo 'deploying the application'
             }
         }
-    }
-    post {
-        
     }
 }

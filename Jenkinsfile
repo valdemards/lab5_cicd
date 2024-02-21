@@ -9,14 +9,17 @@ pipeline {
         stage("build") {
 
             steps {
+                echo 'start building the application'
                 sh 'npm install'
-                echo 'building the application'
+                echo 'finished building the application'
             }
         }
         stage("test") {
 
             steps {
+                echo 'start testing the application'
                 sh 'npm test'
+                echo 'finished testing the application'
             }
         }
         stage("docker build") {
@@ -24,7 +27,7 @@ pipeline {
             steps {
                 echo 'creating docker container'
                 script {
-                    docker.build("multibranch_pipeline:latest")
+                    sh 'docker build -t multibranch_app .'
                 }
             }
         }

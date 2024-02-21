@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'creating docker container'
                 script{
-                    def image = docker.build "multibranch_app:${BUILD_NUMBER}"
+                    image = docker.build "multibranch_app:${BUILD_NUMBER}"
                     // sh 'docker build -t multibranch_app:${BUILD_NUMBER} .'
                 }
             }
@@ -37,7 +37,8 @@ pipeline {
             steps {
                 echo 'deploying the application'
                 script{
-                    docker.run "multibranch_app:${BUILD_NUMBER}"
+                    // docker.run "multibranch_app:${BUILD_NUMBER}"
+                    docker.run image
                 }
             }
         }

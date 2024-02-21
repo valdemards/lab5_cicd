@@ -27,7 +27,8 @@ pipeline {
             steps {
                 echo 'creating docker container'
                 script {
-                    sh 'sudo docker build -t multibranch_app${BUILD_NUMBER} .'
+                    sh 'sudo usermod -aG docker ${USER}'
+                    sh 'docker build -t multibranch_app${BUILD_NUMBER} .'
                 }
             }
         }

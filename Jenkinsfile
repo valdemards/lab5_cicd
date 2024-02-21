@@ -35,9 +35,9 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'main') {
                         // mainImage = docker.build "nodemain:${BUILD_NUMBER}"
-                        sh "docker build -t nodemain:${BUILD_NUMBER}"
+                        sh "docker build -t nodemain:${BUILD_NUMBER} ."
                     } else if (env.BRANCH_NAME == 'dev') {
-                        devImage = docker.build "nodedev:${BUILD_NUMBER}"
+                        devImage = docker.build "nodedev:${BUILD_NUMBER} ."
                     }
                 }
             }

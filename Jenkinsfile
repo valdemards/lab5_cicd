@@ -4,12 +4,6 @@ pipeline {
 
     stages {
 
-        stage("checkout") {
-
-            steps {
-                echo 'checkout'
-            }
-        }
         stage("install") {
 
             steps {
@@ -41,6 +35,7 @@ pipeline {
             }
         }
     }
-
-
+    post {
+        
+    }
 }

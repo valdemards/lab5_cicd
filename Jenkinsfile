@@ -29,7 +29,6 @@ pipeline {
                 echo 'creating docker container'
                 script{
                     image = docker.build "multibranch_app:${BUILD_NUMBER}"
-                    // sh 'docker build -t multibranch_app:${BUILD_NUMBER} .'
                 }
             }
         }
@@ -37,8 +36,8 @@ pipeline {
             steps {
                 echo 'deploying the application'
                 script{
-                    // docker.run "multibranch_app:${BUILD_NUMBER}"
-                    docker.image.run(['-p 3001:3000'])
+                    // docker.image.run()
+                    image.run(['-p 3001:3000'])
                 }
             }
         }

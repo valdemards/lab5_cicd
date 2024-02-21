@@ -23,6 +23,9 @@ pipeline {
 
             steps {
                 echo 'creating docker container'
+                script {
+                    docker.build("multibranch_pipeline:latest")
+                }
             }
         }
                 stage("deploy") {

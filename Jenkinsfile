@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'creating docker container'
                 script {
-                    docker.build('multibranch_app:${BUILD_NUMBER}')
+                    image = docker.build('multibranch_app:${BUILD_NUMBER}')
                     // sh 'docker build -t multibranch_app:${BUILD_NUMBER} .'
                 }
             }

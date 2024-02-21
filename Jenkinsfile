@@ -48,8 +48,10 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'main') {
                         sh "docker run -d --expose 3000 -p 3000:3000 nodemain:${BUILD_NUMBER}"
+                        sh "docker rmi nodemain:${BUILD_NUMBER}"
                     } else if (env.BRANCH_NAME == 'dev') {
                         sh "docker run -d --expose 3001 -p 3001:3000 nodedev:${BUILD_NUMBER}"
+                        sh "docker rmi nodedev:${BUILD_NUMBER}"
                     }
                 }
             }

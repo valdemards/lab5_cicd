@@ -34,7 +34,8 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
-                        mainImage = docker.build "nodemain:${BUILD_NUMBER}"
+                        // mainImage = docker.build "nodemain:${BUILD_NUMBER}"
+                        sh "docker build -t nodemain:${BUILD_NUMBER}"
                     } else if (env.BRANCH_NAME == 'dev') {
                         devImage = docker.build "nodedev:${BUILD_NUMBER}"
                     }
@@ -46,9 +47,9 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
-                        sh "docker run -d --expose 3000 -p 3000:3000 ${mainImage}"
+                        sh "docker run -d --expose 3000 -p 3000:3000 nodemain:${BUILD_NUMBER}"
                     } else if (env.BRANCH_NAME == 'dev') {
-                        sh "docker run -d --expose 3001 -p 3001:3000 ${devImage}"
+                        sh "docker run -d --expose 3001 -p 3001:3000 nodedev:${BUILD_NUMBER}"
                     }
                 }
             }

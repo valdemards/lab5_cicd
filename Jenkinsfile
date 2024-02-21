@@ -46,9 +46,9 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
-                        docker run -d --expose 3000 -p 3000:3000 mainImage
+                        sh "docker run -d --expose 3000 -p 3000:3000 mainImage"
                     } else if (env.BRANCH_NAME == 'dev') {
-                        docker run -d --expose 3001 -p 3001:3000 devImage
+                        sh "docker run -d --expose 3001 -p 3001:3000 devImage"
                     }
                 }
             }

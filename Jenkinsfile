@@ -9,14 +9,20 @@ pipeline {
 
     stages {
         stage("build") {
+            when {
+                branch 'main'
+            }
             steps {
                 echo 'start building the application'
                 sh 'npm install'
                 echo 'finished building the application'
             }
         }
-
+        
         stage("test") {
+            when {
+                branch 'dev'
+            }
             steps {
                 echo 'start testing the application'
                 sh 'npm test'
@@ -25,19 +31,36 @@ pipeline {
         }
 
         stage("docker build") {
+            when {
+                branch 'main'
+            }
             steps {
-                echo 'creating docker container'
                 script{
-                    image = docker.build "multibranch_app:${BUILD_NUMBER}"
+                    mainImage = docker.build "nodemain:${BUILD_NUMBER}"
+                }
+            }
+            when {
+                branch 'dev'
+            }
+            steps {
+                script{
+                    devImage = docker.build "nodedev:${BUILD_NUMBER}"
                 }
             }
         }
                 stage("deploy") {
             steps {
-                echo 'deploying the application'
+                when {
+                branch 'main'
+            }
                 script{
-                    // docker.image.run()
-                    image.run(['-p 3001:3000'])
+                    mainImage.run(['-p 3000:3000'])
+                }
+            when {
+                branch 'dev'
+            }
+                script{
+                    devImage.run(['-p 3001:3000'])
                 }
             }
         }

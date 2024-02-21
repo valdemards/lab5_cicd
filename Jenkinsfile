@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     tools {
-        docker 'docker'
+        // docker 'docker'
         nodejs 'nodejs'
     }
 

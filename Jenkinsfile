@@ -46,13 +46,13 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
-                        sh "docker stop nodemain_container"
+                        sh "docker stop nodemain_container || true"
                         sh "docker run --name nodemain_container -d --expose 3000 -p 3000:3000 nodemain:${BUILD_NUMBER}"
-                        sh "docker rmi -f nodemain:${BUILD_NUMBER}"
+                        sh "docker rmi -f nodemain:${BUILD_NUMBER} || true"
                     } else if (env.BRANCH_NAME == 'dev') {
-                        sh "docker stop nodedev_container"
+                        sh "docker stop nodedev_container || true"
                         sh "docker run --name nodedev_container -d --expose 3001 -p 3001:3000 nodedev:${BUILD_NUMBER}"
-                        sh "docker rmi -f nodedev:${BUILD_NUMBER}"
+                        sh "docker rmi -f nodedev:${BUILD_NUMBER} || true"
                     }
                 }
             }

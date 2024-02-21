@@ -6,16 +6,10 @@ pipeline {
         nodejs 'nodejs'
     }
     stages {
-
-        stage("install") {
-
-            steps {
-                sh 'npm install'
-            }
-        }
         stage("build") {
 
             steps {
+                sh 'npm install'
                 echo 'building the application'
             }
         }
